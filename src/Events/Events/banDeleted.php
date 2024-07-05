@@ -1,9 +1,9 @@
 <?php
 	/**
-	 * This file is a part of Query
+	 * This file is a part of teamspeakframework
 	 *
 	 * @author Maciej Skarbek <macieqskarbek@gmail.com>
-	 * @copyright (c) 2024, dBot.pl
+	 * @copyright (c) 2024 Maciej Skarbek
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 * @link https://dbot.pl
 	 *
@@ -13,10 +13,10 @@
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 **/
 	
-	namespace dBot\TeamSpeak\Adapter\Events;
+	namespace mskarbek48\TeamspeakFramework\Adapter\Events;
 	
-	use dBot\TeamSpeak\Adapter\Abstract\AbstractBan;
-	use dBot\TeamSpeak\Adapter\Interface\iEvent;
+	use mskarbek48\TeamspeakFramework\Adapter\Abstract\AbstractBan;
+	use mskarbek48\TeamspeakFramework\Adapter\Interface\iEvent;
 	
 	class banDeleted extends AbstractBan implements iEvent
 	{

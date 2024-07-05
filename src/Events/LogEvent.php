@@ -1,9 +1,9 @@
 <?php
 	/**
-	 * This file is a part of Query
+	 * This file is a part of teamspeakframework
 	 *
 	 * @author Maciej Skarbek <macieqskarbek@gmail.com>
-	 * @copyright (c) 2024, dBot.pl
+	 * @copyright (c) 2024 Maciej Skarbek
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 * @link https://dbot.pl
 	 *
@@ -13,32 +13,32 @@
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 **/
 	
-	namespace dBot\TeamSpeak\Adapter;
+	namespace mskarbek48\TeamspeakFramework\Adapter;
 	
-	use dBot\TeamSpeak\Adapter\Events\banAdded;
-	use dBot\TeamSpeak\Adapter\Events\banDeleted;
-	use dBot\TeamSpeak\Adapter\Events\channelGroupCopied;
-	use dBot\TeamSpeak\Adapter\Events\channelGroupCreated;
-	use dBot\TeamSpeak\Adapter\Events\channelGroupDeleted;
-	use dBot\TeamSpeak\Adapter\Events\channelGroupRenamed;
-	use dBot\TeamSpeak\Adapter\Events\clientAddedToChannelGroup;
-	use dBot\TeamSpeak\Adapter\Events\clientAddedToServerGroup;
-	use dBot\TeamSpeak\Adapter\Events\clientRemovedFromServerGroup;
-	use dBot\TeamSpeak\Adapter\Events\permissionAddedToChannel;
-	use dBot\TeamSpeak\Adapter\Events\permissionAddedToChannelGroup;
-	use dBot\TeamSpeak\Adapter\Events\permissionAddedToClient;
-	use dBot\TeamSpeak\Adapter\Events\permissionAddedToClientChannel;
-	use dBot\TeamSpeak\Adapter\Events\permissionAddedToServerGroup;
-	use dBot\TeamSpeak\Adapter\Events\permissionRemovedFromChannel;
-	use dBot\TeamSpeak\Adapter\Events\permissionRemovedFromChannelGroup;
-	use dBot\TeamSpeak\Adapter\Events\permissionRemovedFromClient;
-	use dBot\TeamSpeak\Adapter\Events\permissionRemovedFromClientChannel;
-	use dBot\TeamSpeak\Adapter\Events\permissionRemovedFromServerGroup;
-	use dBot\TeamSpeak\Adapter\Events\serverGroupCopied;
-	use dBot\TeamSpeak\Adapter\Events\serverGroupCreated;
-	use dBot\TeamSpeak\Adapter\Events\serverGroupDeleted;
-	use dBot\TeamSpeak\Adapter\Events\serverGroupRenamed;
-	use dBot\TeamSpeak\Ts3admin;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\banAdded;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\banDeleted;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\channelGroupCopied;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\channelGroupCreated;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\channelGroupDeleted;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\channelGroupRenamed;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\clientAddedToChannelGroup;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\clientAddedToServerGroup;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\clientRemovedFromServerGroup;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\permissionAddedToChannel;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\permissionAddedToChannelGroup;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\permissionAddedToClient;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\permissionAddedToClientChannel;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\permissionAddedToServerGroup;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\permissionRemovedFromChannel;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\permissionRemovedFromChannelGroup;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\permissionRemovedFromClient;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\permissionRemovedFromClientChannel;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\permissionRemovedFromServerGroup;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\serverGroupCopied;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\serverGroupCreated;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\serverGroupDeleted;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\serverGroupRenamed;
+	use mskarbek48\TeamspeakFramework\Ts3admin;
 	
 	class LogEvent
 	{

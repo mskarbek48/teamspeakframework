@@ -1,19 +1,18 @@
 <?php
 	/**
-	 * This file is a part of Query
+	 * This file is a part of teamspeakframework
 	 *
 	 * @author Maciej Skarbek <macieqskarbek@gmail.com>
-	 * @copyright (c) 2024, dBot.pl
+	 * @copyright (c) 2024 Maciej Skarbek
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
-	 * @link https://dbot.pl
 	 *
-	 * @created at 7/3/24 9:13 PM
-	 * @updated at 7/3/24 9:13 PM
+	 * @created at 05.07.2024 16:31
+	 * @updated at 05.07.2024 16:31
 	 *
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 **/
 	
-	namespace dBot\TeamSpeak\Adapter\Abstract;
+	namespace mskarbek48\TeamspeakFramework\Adapter\Abstract;
 	
 	abstract class AbstractEventClientGroup
 	{

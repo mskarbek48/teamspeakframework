@@ -1,9 +1,9 @@
 <?php
 	/**
-	 * This file is a part of Query
+	 * This file is a part of teamspeakframework
 	 *
 	 * @author Maciej Skarbek <macieqskarbek@gmail.com>
-	 * @copyright (c) 2024, dBot.pl
+	 * @copyright (c) 2024 Maciej Skarbek
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 * @link https://dbot.pl
 	 *
@@ -13,11 +13,11 @@
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 **/
 	
-	namespace dBot\TeamSpeak\Adapter\Events;
+	mskarbek48\TeamspeakFrameworkAdapter\Events;
 	
-	use dBot\TeamSpeak\Adapter\Abstract\AbstractPermissionChannel;
-	use dBot\TeamSpeak\Adapter\Interface\iEvent;
-	use dBot\TeamSpeak\Adapter\Interface\iEventChannel;
-	use dBot\TeamSpeak\Adapter\Interface\iEventPermission;
+	use mskarbek48\TeamspeakFramework\Adapter\Abstract\AbstractPermissionChannel;
+	use mskarbek48\TeamspeakFramework\Adapter\Interface\iEvent;
+	use mskarbek48\TeamspeakFramework\Adapter\Interface\iEventChannel;
+	use mskarbek48\TeamspeakFramework\Adapter\Interface\iEventPermission;
 	
 	final class permissionRemovedFromChannel extends AbstractPermissionChannel implements iEvent, iEventChannel, iEventPermission { }

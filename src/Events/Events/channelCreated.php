@@ -1,9 +1,9 @@
 <?php
 	/**
-	 * This file is a part of Query
+	 * This file is a part of teamspeakframework
 	 *
 	 * @author Maciej Skarbek <macieqskarbek@gmail.com>
-	 * @copyright (c) 2024, dBot.pl
+	 * @copyright (c) 2024 Maciej Skarbek
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 * @link https://dbot.pl
 	 *
@@ -11,11 +11,11 @@
 	 *
 	 **/
 	
-	namespace dBot\TeamSpeak\Adapter\Events;
+	namespace mskarbek48\TeamspeakFramework\Adapter\Events;
 	
-	use dBot\TeamSpeak\Entity\Channel;
-	use dBot\TeamSpeak\Entity\Client;
-	use dBot\TeamSpeak\Ts3admin;
+	use mskarbek48\TeamspeakFramework\Entity\Channel;
+	use mskarbek48\TeamspeakFramework\Entity\Client;
+	use mskarbek48\TeamspeakFramework\Ts3admin;
 	
 	class channelCreated
 	{

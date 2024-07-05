@@ -1,9 +1,9 @@
 <?php
 	/**
-	 * This file is a part of Query
+	 * This file is a part of teamspeakframework
 	 *
 	 * @author Maciej Skarbek <macieqskarbek@gmail.com>
-	 * @copyright (c) 2024, dBot.pl
+	 * @copyright (c) 2024 Maciej Skarbek
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 * @link https://dbot.pl
 	 *
@@ -13,7 +13,7 @@
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 **/
 	
-	namespace dBot\TeamSpeak\Adapter\Interface;
+	namespace mskarbek48\TeamspeakFramework\Adapter\Interface;
 	
 	interface iEventGroup
 	{

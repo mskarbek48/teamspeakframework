@@ -1,19 +1,20 @@
 <?php
 	/**
-	 * This file is a part of Query
+	 * This file is a part of teamspeakframework
 	 *
 	 * @author Maciej Skarbek <macieqskarbek@gmail.com>
-	 * @copyright (c) 2024, dBot.pl
+	 * @copyright (c) 2024 Maciej Skarbek
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
-	 * @link https://dbot.pl
 	 *
-	 * @created/updated at 7/5/24 12:15 PM
+	 * @created at 05.07.2024 16:31
+	 * @updated at 05.07.2024 16:31
 	 *
+	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 **/
 	
-	namespace dBot\TeamSpeak\Entity;
+	namespace mskarbek48\TeamspeakFramework\Entity;
 	
-	use dBot\TeamSpeak\Ts3admin;
+	use mskarbek48\TeamspeakFramework\Ts3admin;
 	
 	class Client
 	{

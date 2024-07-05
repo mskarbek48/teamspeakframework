@@ -1,9 +1,9 @@
 <?php
 	/**
-	 * This file is a part of Query
+	 * This file is a part of teamspeakframework
 	 *
 	 * @author Maciej Skarbek <macieqskarbek@gmail.com>
-	 * @copyright (c) 2024, dBot.pl
+	 * @copyright (c) 2024 Maciej Skarbek
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 * @link https://dbot.pl
 	 *
@@ -11,16 +11,16 @@
 	 *
 	 **/
 	
-	namespace dBot\TeamSpeak\Adapter;
+	namespace mskarbek48\TeamspeakFramework\Adapter;
 	
 	use dBot\Database\Database;
-	use dBot\TeamSpeak\Adapter\Events\channelCreated;
-	use dBot\TeamSpeak\Adapter\Events\channelDeleted;
-	use dBot\TeamSpeak\Adapter\Events\channelEdited;
-	use dBot\TeamSpeak\Adapter\Events\clientEnterView;
-	use dBot\TeamSpeak\Adapter\Events\clientLeftView;
-	use dBot\TeamSpeak\Adapter\Events\clientMoved;
-	use dBot\TeamSpeak\Ts3admin;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\channelCreated;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\channelDeleted;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\channelEdited;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\clientEnterView;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\clientLeftView;
+	use mskarbek48\TeamspeakFramework\Adapter\Events\clientMoved;
+	use mskarbek48\TeamspeakFramework\Ts3admin;
 	
 	class NotifyEvent
 	{
