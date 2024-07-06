@@ -1,19 +1,20 @@
 <?php
 
 
-	namespace mskarbek48\teamspeakframework\Transport;
+	namespace mskarbek48\TeamspeakFramework\Transport;
 
 	use Exception;
+	use mskarbek48\TeamspeakFramework\Exception\TransportException;
 
-	class TCP implements TransportInterface
+	class Telnet implements TransportInterface
 	{
 		private $socket;
 
 		public function __construct(string $host, int $port, int $timeout = 2)
 		{
-			$this->socket = fsockopen($host, $port, $errno, $error, $timeout);
+			$this->socket = @fsockopen($host, $port, $errno, $error, $timeout);
 			if (!$this->socket) {
-				throw new Exception("Can't connect to server: $error ($errno)");
+				throw new TransportException("Can't connect to server: $error ($errno)");
 			}
 		}
 
@@ -21,7 +22,7 @@
 		{
 			$line = fgets($this->socket);
 			if ($line === false) {
-				throw new Exception("Can't read from socket");
+				throw new TransportException("Can't read from socket");
 			}
 			return $line;
 		}
@@ -30,7 +31,7 @@
 		{
 			$bytes = fwrite($this->socket, $string);
 			if ($bytes === false) {
-				throw new Exception("Can't write to socket");
+				throw new TransportException("Can't write to socket");
 			}
 		}
 

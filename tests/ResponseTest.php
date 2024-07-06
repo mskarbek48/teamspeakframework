@@ -1,14 +1,13 @@
 <?php
 	/**
-	 * This file is a part of TeamSpeak
+	 * This file is a part of teamspeakframework
 	 *
 	 * @author Maciej Skarbek <macieqskarbek@gmail.com>
-	 * @copyright (c) 2024, dBot.pl
+	 * @copyright (c) 2024 Maciej Skarbek
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
-	 * @link https://dbot.pl
 	 *
-	 * @created at 05.07.2024 16:58
-	 * @updated at 05.07.2024 16:58
+	 * @created at 05.07.2024 16:31
+	 * @updated at 05.07.2024 16:31
 	 *
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 **/
@@ -25,7 +24,6 @@
 		public function testResponse()
 		{
 			$class = new Response("version=3.13.7 build=1655727713 platform=Linux\nerror id=0 msg=ok");
-
 			$array = [
 				"version" => "3.13.7",
 				"build" => "1655727713",
@@ -36,6 +34,19 @@
 			$this->assertEquals(0, $class->errorNumber());
 			$this->assertEquals("ok", $class->errorMessage());
 
+			$class = new Response("version=3.13.7| build=1655727713 platform=Linux\nerror id=3 msg=invalid");
+			$array = [
+				[
+					"version" => "3.13.7",
+				],
+				[
+					"build" => "1655727713",
+					"platform" => "Linux"
+				],
+			];
+			$this->assertEquals($array, $class->response());
+			$this->assertEquals(3, $class->errorNumber());
+			$this->assertEquals("invalid", $class->errorMessage());
 
 		}
 	}

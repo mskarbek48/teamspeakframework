@@ -13,7 +13,7 @@
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 **/
 
-	namespace mskarbek48\teamspeakframework\Transport;
+	namespace mskarbek48\TeamspeakFramework\Transport;
 
 	interface TransportInterface
 	{
