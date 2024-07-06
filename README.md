@@ -54,6 +54,22 @@ $server = $instance->selectServerByPort(9987);
 ```php
 $server = $instance->selectServerById(1);
 ```
+* To listen for TeamSpeak events:
+```php
+$server->serverNotifyRegister("channel", 0);
+$server->serverNotifyRegister("textprivate");
+$server->serverNotifyRegister("tokenused");
+$server->serverNotifyRegister("textchannel");
+
+NotifyEvent::getInstance()->subscribe( function($event){
+    echo match(key($event)){
+        "notifytextmessage" => "Client " . $event["invokername"] . " send message: " . $event["msg"],
+        "notifycliententerview" => "Client " . $event["client_nickname"] . " enter view",
+        "notifychannelcreated" => "Channel " . $event["channel_name"] . " created",
+        default => "Unknown"
+    };
+});
+```
 ## Real life examples
 
 ```php
@@ -86,6 +102,7 @@ foreach($server->clientList()->toArray() as $client)
     }
 }
 ```
+
 
 ## License
 ___
