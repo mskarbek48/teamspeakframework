@@ -14,6 +14,7 @@
 	namespace mskarbek48\TeamspeakFramework\Adapter;
 
 	use mskarbek48\TeamspeakFramework\Adapter\ServerQuery\Reply;
+	use mskarbek48\TeamspeakFramework\Event\NotifyEvent;
 	use mskarbek48\TeamspeakFramework\Node\Instance;
 	use mskarbek48\TeamspeakFramework\TeamSpeak;
 	use mskarbek48\TeamspeakFramework\Utils\StringHelper;
@@ -33,6 +34,11 @@
 			}
 		}
 
+		public function waitForEvents(): void
+		{
+			NotifyEvent::getInstance()->onEvent($this->getTransport()->readLine());
+		}
+
 		public function request(array $preparedCommand): Reply
 		{
 			foreach($preparedCommand as $command_part)
@@ -43,9 +49,9 @@
 			$reply = "";
 			do {
 				$str = $this->getTransport()->readLine();
-				if(str_starts_with($str, TeamSpeak::TEAMSPEAK_EVENT_PREFIX))
+				if(str_contains(substr($str,0,7), TeamSpeak::TEAMSPEAK_EVENT_PREFIX))
 				{
-					#TODO: implement event handling
+					NotifyEvent::getInstance()->onEvent($str);
 					continue;
 				}
 				$reply .= $str;
@@ -62,14 +68,14 @@
 
 		public function prepare(string $command, array $arguments, array $params): array
 		{
-			$command = strtolower($command) . " ";
+			$command = strtolower($command);
 			foreach($arguments as $key => $value)
 			{
 				if(strlen($value))
 				{
 					$key = new StringHelper($key);
 					$value = new StringHelper($value);
-					$command .= $key->escape() . "=" . $value->escape() . " ";
+					$command .= " " . $key->escape() . "=" . $value->escape();
 				}
 			}
 			foreach($params as $param)
@@ -82,6 +88,7 @@
 			$splitted[count($splitted) - 1] .= "\n";
 			return $splitted;
 		}
+
 
 		public function getInstance(): Instance
 		{

@@ -14,6 +14,7 @@
 	namespace mskarbek48\TeamspeakFramework\Node;
 
 	use mskarbek48\TeamspeakFramework\Adapter\ServerQuery\Reply;
+	use mskarbek48\TeamspeakFramework\Observer\channelCreated;
 
 	class Server extends AbstractNode
 	{
@@ -563,6 +564,16 @@
 		public function serverNotifyUnregister(): Reply
 		{
 			return $this->serverQuery->execute("servernotifyunregister");
+		}
+
+		public function serverNotifyRegister(string $event, int $id = 0): Reply
+		{
+			if($event != 'channel')
+			{
+				return $this->serverQuery->execute("servernotifyregister", ["event" => $event]);
+			}
+			return $this->serverQuery->execute("servernotifyregister", ["event" => $event, "id" => $id]);
+
 		}
 
 		public function serverGroupDeletePerm(int $sgid, array $perms): Reply

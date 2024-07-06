@@ -23,6 +23,11 @@
 			protected ServerQuery $serverQuery
 		){}
 
+		public function getParent(): ServerQuery
+		{
+			return $this->serverQuery;
+		}
+
 		public function version(): Reply
 		{
 			return $this->serverQuery->execute("version");
