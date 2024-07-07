@@ -13,7 +13,7 @@
 
 	namespace mskarbek48\TeamspeakFramework\Adapter\ServerQuery;
 
-	class Exception extends \Exception
+	class ServerQueryException extends \Exception
 	{
 
 	}

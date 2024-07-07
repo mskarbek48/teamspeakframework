@@ -17,6 +17,7 @@
 
 	class TeamSpeak
 	{
+
 		const TEAMSPEAK_PROTOCOL_IDENTIFIER = "TS3";
 
 		const TEAMSPEAK_WELCOME_MESSAGE = "Welcome to the TeamSpeak 3 ServerQuery interface, type \"help\" for a list of commands and \"help <command>\" for information on a specific command.";
@@ -55,33 +56,53 @@
 
 		private int $port;
 
+		/*
+		 * @return TeamSpeak
+		 */
 		public static function factory(): TeamSpeak
 		{
 			return new TeamSpeak();
 		}
 
+		/*
+		 * @param string $host - Address of the TeamSpeak server
+		 * @return TeamSpeak
+		 */
 		public function setHost(string $host): TeamSpeak
 		{
 			$this->host = $host;
 			return $this;
 		}
 
+		/*
+		 * @param int $port - Port of the TeamSpeak server
+		 * @return TeamSpeak
+		 */
 		public function setPort(int $port): TeamSpeak
 		{
 			$this->port = $port;
 			return $this;
 		}
 
+		/*
+		 * @return string - Address of the TeamSpeak server
+		 */
 		public function getHost(): string
 		{
 			return $this->host;
 		}
 
+		/*
+		 * @return int - Port of the TeamSpeak server Query interface
+		 */
 		public function getPort(): int
 		{
 			return $this->port;
 		}
 
+		/*
+		 * @return ServerQuery Adapter
+		 */
 		public function connect(): ServerQuery
 		{
 			return new ServerQuery($this);

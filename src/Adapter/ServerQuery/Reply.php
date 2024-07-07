@@ -21,6 +21,10 @@
 
 		private StringHelper $reply;
 
+		/*
+		 * @param string $reply - Reply from server query transport
+		 * @return Reply - Instance of Reply
+		 */
 		public static function factory(string $reply): Reply
 		{
 			return new Reply($reply);
@@ -31,21 +35,33 @@
 			$this->reply = new StringHelper($reply);
 		}
 
+		/*
+		 * @return array - Array of error id and error message
+		 */
 		public function getError(): array
 		{
 			return $this->reply->pregMatch('/error id=(\d*) msg=(.*)/');
 		}
 
+		/*
+		 * @return string - Data from reply without error message
+		 */
 		private function getData(): string
 		{
 			return $this->reply->explode("error id=")[0];
 		}
 
+		/*
+		 * @return array - Data from reply as array
+		 */
 		public function toArray(): array
 		{
 			return StringHelper::factory($this->getData())->toArray();
 		}
 
+		/*
+		 * @return array - Data from reply as associative array
+		 */
 		public function toAssocArray(): array
 		{
 			$array = [];
@@ -58,11 +74,17 @@
 			return $array;
 		}
 
+		/*
+		 * @return string - Error message
+		 */
 		public function getErrorMessage(): string
 		{
 			return StringHelper::factory($this->getError()[2])->unescape();
 		}
 
+		/*
+		 * @return int - Error id
+		 */
 		public function getErrorId(): int
 		{
 			return $this->getError()[1];

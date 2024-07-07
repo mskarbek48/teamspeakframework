@@ -13,10 +13,14 @@
 
 	use mskarbek48\TeamspeakFramework\Adapter\ServerQuery;
 	use mskarbek48\TeamspeakFramework\TeamSpeak;
+	use mskarbek48\TeamspeakFramework\Event\NotifyEvent;
 	use PHPUnit\Framework\TestCase;
+
 
 	class TeamSpeakTest extends TestCase
 	{
+
+
 
 		public function testSetHost()
 		{

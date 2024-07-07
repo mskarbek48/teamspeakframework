@@ -19,12 +19,18 @@
 	{
 		private static $instance;
 
-		private $events = [];
+		private array $events = [];
 
-		private $observers = [];
+		/*
+		 * @var callable[] - array of observers
+		 */
+		private array $observers = [];
 
 		private function __construct() { }
 
+		/**
+		 * @return NotifyEvent
+		 */
 		public static function getInstance(): NotifyEvent
 		{
 			if(!self::$instance)
@@ -34,11 +40,17 @@
 			return self::$instance;
 		}
 
+		/**
+		 * @param callable $callback
+		 */
 		public function subscribe(callable $observer)
 		{
 			$this->observers[] = $observer;
 		}
 
+		/**
+		 * @param array $event
+		 */
 		public function notify($event)
 		{
 			foreach($this->observers as $observer)
@@ -47,6 +59,9 @@
 			}
 		}
 
+		/**
+		 * @param string $event_raw - raw event string from TeamSpeak
+		 */
 		public function onEvent(string $event_raw)
 		{
 			$event = new StringHelper($event_raw);

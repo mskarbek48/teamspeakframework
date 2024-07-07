@@ -4,26 +4,22 @@
 This is a **PHP framework** for web and console applications that interact with the TeamSpeak 3 server query interface.
 
 ## Installation
-___
 * Install the package via composer:
 ```bash
-composer require mskarbek48/ts3phpframework
+composer require mskarbek48/teamspeakframework
 ```
 ## Features
-___
 * Access to all TeamSpeak 3 and TeamSpeak 5 server query commands.
 * Event handling for default TeamSpeak "notifyevents" and custom events from logs.
 * Compatibility with TeamSpeak 3 and TeamSpeak 5 servers.
 * Compatibility with PHP 8.3 and higher.
 
 ## Tests
-___
 * To run the tests, you need to install the package via composer and run the following command:
 ```bash
 php vendor/bin/phpunit
 ```
 ## Getting Started
-___
 * Connecting to TeamSpeak ServerQuery interface:
 ```php
 <?php
@@ -56,6 +52,7 @@ $server = $instance->selectServerById(1);
 ```
 * To listen for TeamSpeak events:
 ```php
+$server = $instance->getServerById(1);
 $server->serverNotifyRegister("channel", 0);
 $server->serverNotifyRegister("textprivate");
 $server->serverNotifyRegister("tokenused");
@@ -69,6 +66,15 @@ NotifyEvent::getInstance()->subscribe( function($event){
         default => "Unknown"
     };
 });
+
+while($server->getParent()->isConnected())
+{
+    if(time() - $server->getParent()->getLastExecutedCommandTime() > 60)
+    {
+        $server->version(); # Prevent timeout
+    }
+    $server->getParent()->waitForEvents(); # Remove this line, if you want to disable blocking
+}
 ```
 ## Real life examples
 
@@ -96,7 +102,7 @@ $server = $instance->selectServerByPort(9987);
 # Kick all clients from the server with a specific nickname:
 foreach($server->clientList()->toArray() as $client)
 {
-    if($client->get("nickname") == 'iwanttobekicked')
+    if($client['client_nickname']== 'iwanttobekicked')
     {
         $server->clientKick($client['clid'], TeamSpeak::TEAMSPEAK_KICK_SERVER, 'Bye bye!');
     }
@@ -105,5 +111,4 @@ foreach($server->clientList()->toArray() as $client)
 
 
 ## License
-___
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.

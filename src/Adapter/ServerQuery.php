@@ -14,6 +14,7 @@
 	namespace mskarbek48\TeamspeakFramework\Adapter;
 
 	use mskarbek48\TeamspeakFramework\Adapter\ServerQuery\Reply;
+	use mskarbek48\TeamspeakFramework\Adapter\ServerQuery\ServerQueryException;
 	use mskarbek48\TeamspeakFramework\Event\NotifyEvent;
 	use mskarbek48\TeamspeakFramework\Node\Instance;
 	use mskarbek48\TeamspeakFramework\TeamSpeak;
@@ -21,17 +22,25 @@
 
 	class ServerQuery extends AbstractTeamSpeakAdapter
 	{
+
+		private int $lastExecutionTime = 0;
+
 		public function __construct(TeamSpeak $teamSpeak)
 		{
 			parent::__construct($teamSpeak);
 			if(!str_contains($this->getTransport()->readLine(), TeamSpeak::TEAMSPEAK_PROTOCOL_IDENTIFIER))
 			{
-				throw new \Exception("Invalid protocol identifier");
+				throw new ServerQueryException("Invalid protocol identifier");
 			}
 			if(!str_contains($this->getTransport()->readLine(), TeamSpeak::TEAMSPEAK_WELCOME_MESSAGE))
 			{
-				throw new \Exception("Invalid welcome message");
+				throw new ServerQueryException("Invalid welcome message");
 			}
+		}
+
+		public function getLastExecutedCommandTime(): int
+		{
+			return $this->lastExecutionTime;
 		}
 
 		public function waitForEvents(): void
@@ -39,23 +48,37 @@
 			NotifyEvent::getInstance()->onEvent($this->getTransport()->readLine());
 		}
 
+		public function isConnected(): bool
+		{
+			return $this->getTransport()->isConnected();
+		}
+
 		public function request(array $preparedCommand): Reply
 		{
+			$events = [];
 			foreach($preparedCommand as $command_part)
 			{
 				$this->getTransport()->writeLine($command_part);
 			}
+			$this->lastExecutionTime = time();
 
 			$reply = "";
 			do {
 				$str = $this->getTransport()->readLine();
 				if(str_contains(substr($str,0,7), TeamSpeak::TEAMSPEAK_EVENT_PREFIX))
 				{
-					NotifyEvent::getInstance()->onEvent($str);
+					$events[] = $str;
 					continue;
 				}
 				$reply .= $str;
 			} while(!str_contains($str, TeamSpeak::TEAMSPEAK_ERROR_PREFIX));
+
+
+			foreach($events as $event)
+			{
+				NotifyEvent::getInstance()->onEvent($event);
+			}
+
 
 			return Reply::factory($reply);
 
