@@ -52,28 +52,22 @@ $server = $instance->selectServerById(1);
 ```
 * To listen for TeamSpeak events:
 ```php
-$server = $instance->getServerById(1);
-$server->serverNotifyRegister("channel", 0);
-$server->serverNotifyRegister("textprivate");
-$server->serverNotifyRegister("tokenused");
-$server->serverNotifyRegister("textchannel");
-
-NotifyEvent::getInstance()->subscribe( function($event){
-    echo match(key($event)){
-        "notifytextmessage" => "Client " . $event["invokername"] . " send message: " . $event["msg"],
-        "notifycliententerview" => "Client " . $event["client_nickname"] . " enter view",
-        "notifychannelcreated" => "Channel " . $event["channel_name"] . " created",
-        default => "Unknown"
-    };
-});
+$server->serverNotifyRegister('server');
+$server->serverNotifyRegister('channel',0);
+$server->serverNotifyRegister('textprivate');
 
 while($server->getParent()->isConnected())
 {
     if(time() - $server->getParent()->getLastExecutedCommandTime() > 60)
     {
-        $server->version(); # Prevent timeout
+        $server->getParent()->version(); # Prevent timeout
     }
-    $server->getParent()->waitForEvents(); # Remove this line, if you want to disable blocking
+    $event = $server->getParent()->waitForEvents(1); # Set to zero, to disable blocking
+    switch(key($event)) {
+        case "notifyclientmoved":
+            echo "Client moved: " . $event['clid'] . " to " . $event['ctid'] . PHP_EOL;
+            break;
+    }
 }
 ```
 ## Real life examples
@@ -100,7 +94,7 @@ $server = $instance->selectServerByPort(9987);
 
 
 # Kick all clients from the server with a specific nickname:
-foreach($server->clientList()->toArray() as $client)
+foreach($server->clientList()->toAssocArray() as $client)
 {
     if($client['client_nickname']== 'iwanttobekicked')
     {

@@ -11,7 +11,7 @@
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 **/
 
-	namespace mskarbek48\TeamspeakFramework\Adapter\ServerQuery;
+	namespace mskarbek48\TeamspeakFramework\Exception;
 
 	class ServerQueryException extends \Exception
 	{

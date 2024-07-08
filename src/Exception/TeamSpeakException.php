@@ -6,24 +6,15 @@
 	 * @copyright (c) 2024 Maciej Skarbek
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 *
-	 * @created at 06.07.2024 13:49
+	 * @created at 08.07.2024 07:58
 	 *
 	 * @license https://opensource.org/licenses/gpl-license.php GNU Public License
 	 **/
 
-	namespace mskarbek48\TeamspeakFramework\Node;
+	namespace mskarbek48\TeamspeakFramework\Exception;
 
-
-	class AbstractNode
+	class TeamSpeakException extends \Exception
 	{
 
-		public function __construct(
-			protected $parent,
-		){}
-
-		public function getParent()
-		{
-			return $this->parent;
-		}
 
 	}

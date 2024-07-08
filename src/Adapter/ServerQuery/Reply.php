@@ -13,42 +13,65 @@
 
 	namespace mskarbek48\TeamspeakFramework\Adapter\ServerQuery;
 
+	use mskarbek48\TeamspeakFramework\Exception\TeamSpeakException;
+	use mskarbek48\TeamspeakFramework\Exception\TeamSpeakPermissionException;
 	use mskarbek48\TeamspeakFramework\TeamSpeak;
 	use mskarbek48\TeamspeakFramework\Utils\StringHelper;
 
 	class Reply
 	{
 
-		private StringHelper $reply;
+		private string $reply;
+
+		private bool $throw;
+
+		private int $errorId = 0;
+
+		private string $errorMessage = "";
+
+		private int $failed_perm_id = 0;
 
 		/*
 		 * @param string $reply - Reply from server query transport
 		 * @return Reply - Instance of Reply
 		 */
-		public static function factory(string $reply): Reply
+		public static function factory(array $reply, bool $throw = true): Reply
 		{
-			return new Reply($reply);
+			return new Reply($reply, $throw);
 		}
 
-		public function __construct(string $reply)
+		private function __construct(array $reply, bool $throw)
 		{
-			$this->reply = new StringHelper($reply);
+			$this->throw = $throw;
+			$this->parseReply($reply);
+			$this->parseError(array_pop($reply));
 		}
 
-		/*
-		 * @return array - Array of error id and error message
-		 */
-		public function getError(): array
+		public function parseReply(array $reply): void
 		{
-			return $this->reply->pregMatch('/error id=(\d*) msg=(.*)/');
+			unset($reply[array_key_last($reply)]);
+			$this->reply = implode("", $reply);
 		}
 
-		/*
-		 * @return string - Data from reply without error message
-		 */
-		private function getData(): string
+		public function parseError(string $results): void
 		{
-			return $this->reply->explode("error id=")[0];
+			$data = StringHelper::factory(str_replace("error", "", $results))->toArray();
+			if($data['id'] != 0 && $this->throw && $data['id'] != 1281)
+			{
+				if(!isset($data['failed_permid']))
+				{
+					throw new TeamSpeakException($data['msg'], $data['id']);
+				} else {
+					throw new TeamSpeakPermissionException($data['msg'] . ", failed on permission id: " .  $this->failed_perm_id, $data['id'],  $this->failed_perm_id);
+				}
+
+			}
+			$this->errorId = $data['id'];
+			$this->errorMessage = $data['msg'];
+			if(isset($data['failed_permid']))
+			{
+				$this->failed_perm_id = $data['failed_permid'];
+			}
 		}
 
 		/*
@@ -56,7 +79,7 @@
 		 */
 		public function toArray(): array
 		{
-			return StringHelper::factory($this->getData())->toArray();
+			return StringHelper::factory($this->reply)->toArray();
 		}
 
 		/*
@@ -65,7 +88,7 @@
 		public function toAssocArray(): array
 		{
 			$array = [];
-			$elements = StringHelper::factory($this->getData())->explode("|");
+			$elements = StringHelper::factory($this->reply)->explode("|");
 			foreach($elements as $value)
 			{
 				$array[] = StringHelper::factory($value)->toArray();
@@ -74,12 +97,17 @@
 			return $array;
 		}
 
+		public function success(): bool
+		{
+			return $this->errorId == 0;
+		}
+
 		/*
 		 * @return string - Error message
 		 */
 		public function getErrorMessage(): string
 		{
-			return StringHelper::factory($this->getError()[2])->unescape();
+			return $this->errorMessage;
 		}
 
 		/*
@@ -87,7 +115,7 @@
 		 */
 		public function getErrorId(): int
 		{
-			return $this->getError()[1];
+			return $this->errorId;
 		}
 
 	}
